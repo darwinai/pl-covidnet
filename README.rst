@@ -16,7 +16,7 @@ pl-covidnet
 Abstract
 --------
 
-plugin for covidnet project
+Plugin to ChRIS for covidnet functionalities
 
 
 Synopsis

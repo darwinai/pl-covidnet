@@ -1,6 +1,6 @@
 #!/usr/bin/env python                                            
 #
-# covidnet fs ChRIS plugin app
+# covidnet ds ChRIS plugin app
 #
 # (c) 2016-2019 Fetal-Neonatal Neuroimaging & Developmental Science Center
 #                   Boston Children's Hospital
@@ -90,16 +90,16 @@ where necessary.)
 
 class Covidnet(ChrisApp):
     """
-    plugin for covidnet project.
+    Plugin to ChRIS for covidnet functionalities.
     """
-    AUTHORS                 = 'darwinai (jeffer.peng@darwinai.ca)'
+    AUTHORS                 = 'Jeffer Peng (jeffer.peng@darwinai.ca)'
     SELFPATH                = os.path.dirname(os.path.abspath(__file__))
     SELFEXEC                = os.path.basename(__file__)
     EXECSHELL               = 'python3'
     TITLE                   = 'A ChRIS plugin app'
     CATEGORY                = ''
-    TYPE                    = 'fs'
-    DESCRIPTION             = 'plugin for covidnet project'
+    TYPE                    = 'ds'
+    DESCRIPTION             = 'Plugin to ChRIS for covidnet functionalities'
     DOCUMENTATION           = 'http://wiki'
     VERSION                 = '0.1'
     ICON                    = '' # url of an icon image

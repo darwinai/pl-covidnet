@@ -22,9 +22,9 @@ setup(
       # for best practices make this version the same as the VERSION class variable
       # defined in your ChrisApp-derived Python class
       version          =   '0.1',
-      description      =   'plugin for covidnet project',
+      description      =   'Plugin to ChRIS for covidnet functionalities',
       long_description =   readme(),
-      author           =   'darwinai',
+      author           =   'Jeffer Peng',
       author_email     =   'jeffer.peng@darwinai.ca',
       url              =   'http://wiki',
       packages         =   ['covidnet'],
