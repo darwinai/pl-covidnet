@@ -18,7 +18,7 @@ class Inference():
         mapping = {'normal': 0, 'pneumonia': 1, 'COVID-19': 2}
         inv_mapping = {0: 'normal', 1: 'pneumonia', 2: 'COVID-19'}
         args = self.args
-        args.imagepath = options.inputdir
+        args.imagepath = options.inputdir+'/'+options.imagefile
 
         sess = tf.Session()
         tf.get_default_graph()
@@ -64,4 +64,4 @@ class Inference():
             f.write('Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.')
 
         print("Copying over the input image...")
-        shutil.copy(options.inputdir, options.outputdir)
+        shutil.copy(options.inputdir+'/'+options.imagefile, options.outputdir)

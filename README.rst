@@ -61,10 +61,13 @@ Run
 
 .. code:: bash
 
-    python covidnet/covidnet.py covidnet/inputimage/ex-covid.jpeg  output
+    python covidnet/covidnet.py  covidnet/inputimage  output --imagefile ex-covid.jpeg
 
 covidnet/inputimage/ex-covid.jpeg is the input image directory
+
 output is the directory you wish the output files to be in
+
+--imagefile ex-covid.jpeg the name of the image in the input directory
 
 Here are 3 optional parameters to specify the location of AI model and the default value is on the right  
 

@@ -149,6 +149,11 @@ class Covidnet(ChrisApp):
                     optional     = True,
                     help         = 'Name of model ckpts',
                     default      = 'model-8485')
+        self.add_argument('--imagefile', 
+                    dest         = 'imagefile', 
+                    type         = str, 
+                    optional     = False,
+                    help         = 'Name of image file to infer from')
         
     def run(self, options):
         """
