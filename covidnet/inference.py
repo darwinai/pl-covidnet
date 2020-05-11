@@ -18,32 +18,38 @@ class Inference():
         mapping = {'normal': 0, 'pneumonia': 1, 'COVID-19': 2}
         inv_mapping = {0: 'normal', 1: 'pneumonia', 2: 'COVID-19'}
         args = self.args
-        args.imagepath = options.inputdir+'/'+options.imagefile
+        args.imagepath = os.getcwd()+'/'+options.inputdir+'/'+options.imagefile
 
-        sess = tf.Session()
-        tf.get_default_graph()
-        saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
-        saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
+        # sess = tf.Session()
+        tf.reset_default_graph()
+        with tf.Session() as sess:
+            tf.get_default_graph()
+            saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
+            saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
 
-        graph = tf.get_default_graph()
+            graph = tf.get_default_graph()
 
-        image_tensor = graph.get_tensor_by_name("input_1:0")
-        pred_tensor = graph.get_tensor_by_name("dense_3/Softmax:0")
+            image_tensor = graph.get_tensor_by_name("input_1:0")
+            pred_tensor = graph.get_tensor_by_name("dense_3/Softmax:0")
 
-        x = cv2.imread(args.imagepath)
-        h, w, c = x.shape
-        x = x[int(h/6):, :]
-        x = cv2.resize(x, (224, 224))
-        x = x.astype('float32') / 255.0
-        pred = sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})
+            x = cv2.imread(args.imagepath)
+            h, w, c = x.shape
+            x = x[int(h/6):, :]
+            x = cv2.resize(x, (224, 224))
+            x = x.astype('float32') / 255.0
+            pred = sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})
         
-        self.generate_output_files(options, {
+        output_dict = {
             '**DISCLAIMER**':'Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.',
             "prediction":inv_mapping[pred.argmax(axis=1)[0]],
             "Normal":str(pred[0][0]),
             "Pneumonia":str(pred[0][1]),
             "COVID-19":str(pred[0][2])
-        })
+        }
+
+        self.generate_output_files(options, output_dict)
+
+        return output_dict
         
     
     def generate_output_files(self,options,data):
