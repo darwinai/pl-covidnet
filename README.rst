@@ -58,28 +58,19 @@ Agruments
 Run
 ----
 
-This ``plugin`` can be run in two modes: natively as a python package or as a containerized docker image.
-
-Using PyPI
-~~~~~~~~~~
-
-To run from PyPI, simply do a 
 
 .. code:: bash
 
-    pip install covidnet
+    python covidnet/covidnet.py covidnet/inputimage/ex-covid.jpeg  output
 
-and run with
+covidnet/inputimage/ex-covid.jpeg is the input image directory
+output is the directory you wish the output files to be in
 
-.. code:: bash
+Here are 3 optional parameters to specify the location of AI model and the default value is on the right
+--weightspath : "../COVID-Net/models/COVIDNet-CXR-Large"
+metaname      : "model.meta"
+ckptname      : "model-8485"
 
-    covidnet.py --man /tmp /tmp
-
-to get inline help. The app should also understand being called with only two positional arguments
-
-.. code:: bash
-
-    covidnet.py /some/input/directory /destination/directory
 
 
 Using ``docker run``

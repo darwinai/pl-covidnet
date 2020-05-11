@@ -13,6 +13,7 @@
 import os
 import sys
 sys.path.append(os.path.dirname(__file__))
+from inference import Inference
 
 # import the Chris app superclass
 from chrisapp.base import ChrisApp
@@ -87,7 +88,6 @@ where necessary.)
 
 """
 
-
 class Covidnet(ChrisApp):
     """
     Plugin to ChRIS for covidnet functionalities.
@@ -131,13 +131,34 @@ class Covidnet(ChrisApp):
         Define the CLI arguments accepted by this plugin app.
         Use self.add_argument to specify a new app argument.
         """
-
+        self.add_argument('-p', '--weightspath', 
+                    dest         = 'weightspath', 
+                    type         = str, 
+                    optional     = True,
+                    help         = 'Path to output folder',
+                    default      = os.getcwd()+'/../COVID-Net/models/COVIDNet-CXR-Large')
+        self.add_argument('--metaname', 
+                    dest         = 'metaname', 
+                    type         = str, 
+                    optional     = True,
+                    help         = 'Name of ckpt meta file',
+                    default      = 'model.meta')
+        self.add_argument('--ckptname', 
+                    dest         = 'ckptname', 
+                    type         = str, 
+                    optional     = True,
+                    help         = 'Name of model ckpts',
+                    default      = 'model-8485')
+        
     def run(self, options):
         """
         Define the code to be run by this plugin app.
         """
+        # python covidnet.py ../../COVID-Net/assets/ex-covid.jpeg  output
         print(Gstr_title)
         print('Version: %s' % self.get_version())
+        infer_obj = Inference(options)
+        infer_obj.infer(options)
 
     def show_man_page(self):
         """
@@ -150,3 +171,7 @@ class Covidnet(ChrisApp):
 if __name__ == "__main__":
     chris_app = Covidnet()
     chris_app.launch()
+
+# chris app needs to write to files as outputs and taking inputs
+# output a dicom image then ChRIS user interface will be able to show it
+# csv, json, or custom html css files
