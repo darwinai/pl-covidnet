@@ -68,11 +68,11 @@ output is the directory you wish the output files to be in
 
 Here are 3 optional parameters to specify the location of AI model and the default value is on the right  
 
---weightspath : "../COVID-Net/models/COVIDNet-CXR-Large"  
+--weightspath: "../COVID-Net/models/COVIDNet-CXR-Large"
 
---metaname      : "model.meta"  
+--metaname: "model.meta"
 
---ckptname      : "model-8485"  
+--ckptname: "model-8485"  
 
 
 
