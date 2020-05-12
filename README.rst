@@ -35,7 +35,7 @@ Synopsis
 Description
 -----------
 
-``covidnet.py`` is a ChRIS-based application that...
+``covidnet.py`` is a ChRIS-based application that integrates COVID-Net to ChRIS
 
 Agruments
 ---------
