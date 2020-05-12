@@ -136,7 +136,7 @@ class Covidnet(ChrisApp):
                     type         = str, 
                     optional     = True,
                     help         = 'Path to output folder',
-                    default      = os.getcwd()+'/../COVID-Net/models/COVIDNet-CXR-Large')
+                    default      = os.getcwd()+'/models/COVIDNet-CXR3-B')
         self.add_argument('--metaname', 
                     dest         = 'metaname', 
                     type         = str, 
@@ -148,22 +148,46 @@ class Covidnet(ChrisApp):
                     type         = str, 
                     optional     = True,
                     help         = 'Name of model ckpts',
-                    default      = 'model-8485')
+                    default      = 'model-1014')
         self.add_argument('--imagefile', 
                     dest         = 'imagefile', 
                     type         = str, 
                     optional     = False,
                     help         = 'Name of image file to infer from')
+        self.add_argument('--in_tensorname', 
+                    dest         = 'in_tensorname', 
+                    type         = str, 
+                    optional     = True,
+                    help         = 'Name of input tensor to graph',
+                    default      = 'input_1:0')
+        self.add_argument('--out_tensorname', 
+                    dest         = 'out_tensorname', 
+                    type         = str, 
+                    optional     = True,
+                    help         = 'Name of output tensor from graph',
+                    default      = 'norm_dense_1/Softmax:0')
+        self.add_argument('--input_size', 
+                    dest         = 'input_size', 
+                    type         = int, 
+                    optional     = True,
+                    help         = 'Size of input (ex: if 480x480, --input_size 480)',
+                    default      = 480)
+        self.add_argument('--top_percent', 
+                    dest         = 'top_percent', 
+                    type         = float, 
+                    optional     = True,
+                    help         = 'Percent top crop from top of image',
+                    default      = 0.08)
         
     def run(self, options):
         """
         Define the code to be run by this plugin app.
         """
-        # python covidnet.py ../../COVID-Net/assets/ex-covid.jpeg  output
+        # python covidnet.py inputimage output --imagefile ex-covid.jpeg
         print(Gstr_title)
         print('Version: %s' % self.get_version())
         infer_obj = Inference(options)
-        infer_obj.infer(options)
+        infer_obj.infer()
 
     def show_man_page(self):
         """

@@ -30,7 +30,8 @@ Synopsis
         [--man]                                                     \
         [--meta]                                                    \
         <inputDir>
-        <outputDir> 
+        <outputDir>
+        [--imagefile] <imagefile>
 
 Description
 -----------
@@ -58,24 +59,23 @@ Agruments
 Run
 ----
 
+Download Machine learning model from: 
+https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
+
+By default, the app uses COVIDNet-CXR3-B.
+
+Then put the downloaded folder in covidnet/models
 
 .. code:: bash
 
-    python covidnet/covidnet.py  covidnet/inputimage  output --imagefile ex-covid.jpeg
+    cd covidnet
+    python covidnet.py inputimage output --imagefile ex-covid.jpeg
 
-covidnet/inputimage/ex-covid.jpeg is the input image directory
+inputimage is the input directory
 
 output is the directory you wish the output files to be in
 
---imagefile ex-covid.jpeg the name of the image in the input directory
-
-Here are 3 optional parameters to specify the location of AI model and the default value is on the right  
-
---weightspath: "../COVID-Net/models/COVIDNet-CXR-Large"
-
---metaname: "model.meta"
-
---ckptname: "model-8485"  
+--imagefile ex-covid.jpeg the name of the input image in the input directory
 
 
 

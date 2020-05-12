@@ -9,23 +9,60 @@ for (dirpath, dirnames, filenames) in os.walk("test_images"):
     }
     for file in filenames:
         parser = argparse.ArgumentParser(description='COVID-Net Inference')
-        parser.add_argument('--weightspath', default=os.getcwd()+'/../../COVID-Net/models/COVIDNet-CXR-Large', type=str, help='Path to output folder')
-        parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-        parser.add_argument('--ckptname', default='model-8485', type=str, help='Name of model ckpts')
-        parser.add_argument('--outputdir', default='output', type=str, help='Name of model ckpts')
+        parser.add_argument('-p', '--weightspath', 
+                    dest         = 'weightspath', 
+                    type         = str, 
+                    help         = 'Path to output folder',
+                    default      = os.getcwd()+'/models/COVIDNet-CXR3-B')
+        parser.add_argument('--metaname', 
+                    dest         = 'metaname', 
+                    type         = str, 
+                    help         = 'Name of ckpt meta file',
+                    default      = 'model.meta')
+        parser.add_argument('--ckptname', 
+                    dest         = 'ckptname', 
+                    type         = str, 
+                    help         = 'Name of model ckpts',
+                    default      = 'model-1014')
+        parser.add_argument('--imagefile', 
+                    dest         = 'imagefile', 
+                    type         = str, 
+                    default      = file,
+                    help         = 'Name of image file to infer from')
+        parser.add_argument('--in_tensorname', 
+                    dest         = 'in_tensorname', 
+                    type         = str, 
+                    help         = 'Name of input tensor to graph',
+                    default      = 'input_1:0')
+        parser.add_argument('--out_tensorname', 
+                    dest         = 'out_tensorname', 
+                    type         = str, 
+                    help         = 'Name of output tensor from graph',
+                    default      = 'norm_dense_1/Softmax:0')
+        parser.add_argument('--input_size', 
+                    dest         = 'input_size', 
+                    type         = int, 
+                    help         = 'Size of input (ex: if 480x480, --input_size 480)',
+                    default      = 480)
+        parser.add_argument('--top_percent', 
+                    dest         = 'top_percent', 
+                    type         = float, 
+                    help         = 'Percent top crop from top of image',
+                    default      = 0.08)
+        parser.add_argument('--inputdir', 
+                    dest         = 'inputdir', 
+                    type         = str, 
+                    default      = 'test_images')
+        parser.add_argument('--outputdir', 
+                    dest         = 'outputdir', 
+                    type         = str, 
+                    default      = 'output')
 
         args = parser.parse_args()
         app = Inference(args)
         print('Processing {}'.format(file))
-        parser = argparse.ArgumentParser(description='COVID-Net Inference')
-        parser.add_argument('--inputdir', default='test_images', type=str, help='Path to output folder')
-        parser.add_argument('--imagefile', default=file, type=str, help='Path to output folder')
-        parser.add_argument('--outputdir', default='outputdir', type=str, help='Path to output folder')
 
-
-        args = parser.parse_args()
-
-        result = app.infer(args)
+        result = app.infer()
         count[result['prediction']] += 1
 
     for pred_type in count:

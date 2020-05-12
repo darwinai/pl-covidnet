@@ -4,6 +4,7 @@ import os, argparse
 import cv2
 import json
 import shutil 
+from data import process_image_file
 
 
 class Inference():
@@ -14,11 +15,11 @@ class Inference():
     def __init__(self, args):
         self.args = args
 
-    def infer(self, options):
+    def infer(self):
         mapping = {'normal': 0, 'pneumonia': 1, 'COVID-19': 2}
         inv_mapping = {0: 'normal', 1: 'pneumonia', 2: 'COVID-19'}
         args = self.args
-        args.imagepath = os.getcwd()+'/'+options.inputdir+'/'+options.imagefile
+        args.imagepath = os.getcwd()+'/'+ self.args.inputdir+'/'+self.args.imagefile
 
         # sess = tf.Session()
         tf.reset_default_graph()
@@ -29,13 +30,10 @@ class Inference():
 
             graph = tf.get_default_graph()
 
-            image_tensor = graph.get_tensor_by_name("input_1:0")
-            pred_tensor = graph.get_tensor_by_name("dense_3/Softmax:0")
+            image_tensor = graph.get_tensor_by_name(args.in_tensorname)
+            pred_tensor = graph.get_tensor_by_name(args.out_tensorname)
 
-            x = cv2.imread(args.imagepath)
-            h, w, c = x.shape
-            x = x[int(h/6):, :]
-            x = cv2.resize(x, (224, 224))
+            x = process_image_file(args.imagepath, args.top_percent, args.input_size)
             x = x.astype('float32') / 255.0
             pred = sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})
         
@@ -47,22 +45,22 @@ class Inference():
             "COVID-19":str(pred[0][2])
         }
 
-        self.generate_output_files(options, output_dict)
+        self.generate_output_files(output_dict)
 
         return output_dict
         
     
-    def generate_output_files(self,options,data):
+    def generate_output_files(self,data):
         # creates the output directory if not exists
-        if not os.path.exists(options.outputdir):
-            os.makedirs(options.outputdir)
+        if not os.path.exists(self.args.outputdir):
+            os.makedirs(self.args.outputdir)
         
         print("Creating prediction.json...")
-        with open('{}/prediction.json'.format(options.outputdir), 'w') as f:
+        with open('{}/prediction.json'.format(self.args.outputdir), 'w') as f:
             json.dump(data, f, indent=4)
         
         print("Creating prediction.txt...")
-        with open('{}/prediction.txt'.format(options.outputdir), 'w') as f:
+        with open('{}/prediction.txt'.format(self.args.outputdir), 'w') as f:
             f.write('Prediction: {}\n'.format(data['prediction']))
             f.write('Confidence\n')
             f.write('Normal: {}, Pneumonia: {}, COVID-19: {}\n'.format(data['Normal'], data['Pneumonia'], data['COVID-19']))
@@ -70,4 +68,4 @@ class Inference():
             f.write('Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.')
 
         print("Copying over the input image...")
-        shutil.copy(options.inputdir+'/'+options.imagefile, options.outputdir)
+        shutil.copy(self.args.inputdir+'/'+self.args.imagefile, self.args.outputdir)

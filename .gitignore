@@ -8,3 +8,4 @@ htmlcov
 .docker
 .idea/
 covidnet/test_images
+covidnet/models
