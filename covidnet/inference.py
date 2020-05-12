@@ -55,11 +55,11 @@ class Inference():
         if not os.path.exists(self.args.outputdir):
             os.makedirs(self.args.outputdir)
         
-        print("Creating prediction.json...")
+        print("Creating prediction.json in {}...".format(self.args.outputdir))
         with open('{}/prediction.json'.format(self.args.outputdir), 'w') as f:
             json.dump(data, f, indent=4)
         
-        print("Creating prediction.txt...")
+        print("Creating prediction.txt in {}...".format(self.args.outputdir))
         with open('{}/prediction.txt'.format(self.args.outputdir), 'w') as f:
             f.write('Prediction: {}\n'.format(data['prediction']))
             f.write('Confidence\n')
@@ -67,5 +67,5 @@ class Inference():
             f.write('**DISCLAIMER**\n')
             f.write('Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.')
 
-        print("Copying over the input image...")
+        print("Copying over the input image to: {}...".format(self.args.outputdir))
         shutil.copy(self.args.inputdir+'/'+self.args.imagefile, self.args.outputdir)

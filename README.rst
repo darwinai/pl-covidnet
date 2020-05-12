@@ -90,8 +90,8 @@ Now, prefix all calls with
 
 .. code:: bash
 
-    docker run --rm -v $(pwd)/out:/outgoing                             \
-            fnndsc/pl-covidnet covidnet.py                        \
+    docker run --rm -v $(pwd)/in:/inputimage -v $(pwd)/out:/output                       \
+            pl-covidnet covidnet.py --imagefile ex-covid.jpeg /inputimage /output                       \
 
 Thus, getting inline help is:
 
@@ -102,6 +102,8 @@ Thus, getting inline help is:
             fnndsc/pl-covidnet covidnet.py                        \
             --man                                                       \
             /incoming /outgoing
+
+sudo docker run -v $(pwd)/in:/inputimage -v $(pwd)/out:/output pl-covidnet covidnet.py --imagefile ex-covid.jpeg /inputimage /output
 
 Examples
 --------
