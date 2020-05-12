@@ -7,6 +7,5 @@ docs/build
 htmlcov
 .docker
 .idea/
-covidnet/test_images
 covidnet/models
 covidnet/output
