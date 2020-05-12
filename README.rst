@@ -84,7 +84,14 @@ output is the directory you wish the output files to be in
 Using ``docker run``
 ~~~~~~~~~~~~~~~~~~~~
 
-To run using ``docker``, be sure to assign an "input" directory to ``/incoming`` and an output directory to ``/outgoing``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
+To run using ``docker``, be sure to assign an "in" directory to ``/inputimage`` and an "out" directory to ``/output``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
+
+build the container using 
+
+.. code:: bash
+
+    sudo docker build -t pl-covidnet .
+    
 
 Now, prefix all calls with 
 
@@ -98,15 +105,16 @@ Thus, getting inline help is:
 .. code:: bash
 
     mkdir in out && chmod 777 out
-    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-            fnndsc/pl-covidnet covidnet.py                        \
+    docker run --rm -v $(pwd)/in:/inputimage -v $(pwd)/out:/output      \
+             pl-covidnet covidnet.py                          \
             --man                                                       \
-            /incoming /outgoing
+            /inputimage /output
 
-sudo docker run -v $(pwd)/in:/inputimage -v $(pwd)/out:/output pl-covidnet covidnet.py --imagefile ex-covid.jpeg /inputimage /output
 
 Examples
 --------
+
+sudo docker run -v $(pwd)/in:/inputimage -v $(pwd)/out:/output pl-covidnet covidnet.py --imagefile ex-covid.jpeg /inputimage /output
 
 
 
