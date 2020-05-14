@@ -72,6 +72,8 @@ By default, the app uses COVIDNet-CXR3-B.
 
 Then put the downloaded folder in covidnet/models
 
+The folder structure should be pl-covidnet/covidnet/models/COVIDNet-CXR3-B
+
 .. code:: bash
 
     cd covidnet
@@ -90,7 +92,9 @@ output is the directory you wish the output files to be in
 Using ``docker run``
 ~~~~~~~~~~~~~~~~~~~~
 
-To run using ``docker``, be sure to assign an "in" directory to ``/inputimage`` and an "out" directory to ``/output``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
+To run using ``docker``, be sure to assign an "in" directory to ``/incoming`` and an "out" directory to ``/outgoing``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
+
+Start from the pl-covidnet directory
 
 build the container using 
 
@@ -99,13 +103,25 @@ build the container using
     sudo docker build -t pl-covidnet .
     
 
-Now, prefix all calls with 
+Now, run the container:
 
 .. code:: bash
 
-    docker run --rm -v $(pwd)/in:/inputimage -v $(pwd)/out:/output                       \
-            pl-covidnet covidnet.py --imagefile ex-covid.jpeg /inputimage /output                       \
+    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing                       \
+            pl-covidnet covidnet.py --imagefile ex-covid.jpeg /incoming /outgoing                       \
 
+
+This is volume mapping the in and out directory under pl-covidnet. Feel free to create different directories. 
+
+Make sure the input directory contain an image that fits the --imagefile argument, and make sure the incoming and outgoing 
+directories used as input are the ones being volume mapped.
+
+
+You can create different directories using the following command. chmod 777 out just makes out directory writable
+
+.. code:: bash
+    
+    mkdir in out && chmod 777 out
 
 Examples
 --------
