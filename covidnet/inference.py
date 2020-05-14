@@ -19,7 +19,7 @@ class Inference():
         mapping = {'normal': 0, 'pneumonia': 1, 'COVID-19': 2}
         inv_mapping = {0: 'normal', 1: 'pneumonia', 2: 'COVID-19'}
         args = self.args
-        args.imagepath = os.getcwd()+'/'+ self.args.inputdir+'/'+self.args.imagefile
+        args.imagepath = self.args.inputdir+'/'+self.args.imagefile
 
         # sess = tf.Session()
         tf.reset_default_graph()
