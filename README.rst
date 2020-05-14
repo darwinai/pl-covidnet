@@ -126,8 +126,9 @@ You can create different directories using the following command. chmod 777 out 
 Examples
 --------
 
-sudo docker run -v $(pwd)/in:/inputimage -v $(pwd)/out:/output pl-covidnet covidnet.py --imagefile ex-covid.jpeg /inputimage /output
+sudo docker build -t pl-covidnet .
 
+sudo docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing pl-covidnet covidnet.py --imagefile ex-covid.jpeg /incoming /outgoing
 
 
 
