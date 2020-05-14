@@ -55,6 +55,12 @@ Agruments
     [--meta]
     If specified, print plugin meta data.
 
+    [--meta]
+    If specified, print plugin meta data.
+
+    [--imagefile]
+    The name of the input image in the input directory, this is required
+
 
 Run
 ----
@@ -99,16 +105,6 @@ Now, prefix all calls with
 
     docker run --rm -v $(pwd)/in:/inputimage -v $(pwd)/out:/output                       \
             pl-covidnet covidnet.py --imagefile ex-covid.jpeg /inputimage /output                       \
-
-Thus, getting inline help is:
-
-.. code:: bash
-
-    mkdir in out && chmod 777 out
-    docker run --rm -v $(pwd)/in:/inputimage -v $(pwd)/out:/output      \
-             pl-covidnet covidnet.py                          \
-            --man                                                       \
-            /inputimage /output
 
 
 Examples
