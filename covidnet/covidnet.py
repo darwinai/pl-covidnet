@@ -137,12 +137,6 @@ class Covidnet(ChrisApp):
                     optional     = True,
                     help         = 'Name of ckpt meta file',
                     default      = 'model.meta')
-        self.add_argument('--ckptname', 
-                    dest         = 'ckptname', 
-                    type         = str, 
-                    optional     = True,
-                    help         = 'Name of model ckpts',
-                    default      = 'model-1014')
         self.add_argument('--imagefile', 
                     dest         = 'imagefile', 
                     type         = str, 
