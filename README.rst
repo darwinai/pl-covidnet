@@ -68,11 +68,13 @@ Run
 Download Machine learning model from: 
 https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
 
-By default, the app uses COVIDNet-CXR3-B.
+Make sure to download all three models
 
-Then put the downloaded folder in covidnet/models
+Then put the downloaded folders in covidnet/models
 
-The folder structure should be pl-covidnet/covidnet/models/COVIDNet-CXR3-B
+The folder structure should be:
+
+pl-covidnet/covidnet/models/COVIDNet-CXR3-A, pl-covidnet/covidnet/models/COVIDNet-CXR3-B, pl-covidnet/covidnet/models/COVIDNet-CXR3-C
 
 .. code:: bash
 
@@ -100,7 +102,7 @@ build the container using
 
 .. code:: bash
 
-    sudo docker build -t pl-covidnet .
+    docker build -t pl-covidnet .
     
 
 Now, run the container:

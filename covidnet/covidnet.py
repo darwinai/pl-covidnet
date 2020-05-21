@@ -131,12 +131,6 @@ class Covidnet(ChrisApp):
         Define the CLI arguments accepted by this plugin app.
         Use self.add_argument to specify a new app argument.
         """
-        self.add_argument('-p', '--weightspath', 
-                    dest         = 'weightspath', 
-                    type         = str, 
-                    optional     = True,
-                    help         = 'Path to output folder',
-                    default      = os.getcwd()+'/models/COVIDNet-CXR3-B')
         self.add_argument('--metaname', 
                     dest         = 'metaname', 
                     type         = str, 
@@ -186,8 +180,31 @@ class Covidnet(ChrisApp):
         # python covidnet.py inputimage output --imagefile ex-covid.jpeg
         print(Gstr_title)
         print('Version: %s' % self.get_version())
-        infer_obj = Inference(options)
-        infer_obj.infer()
+        all_three_models = [
+            {
+                'weightspath':'/models/COVIDNet-CXR3-A',
+                'ckptname':'model-2856',
+                'modelused':'modelA'
+            }, 
+            {
+                'weightspath':'/models/COVIDNet-CXR3-B',
+                'ckptname':'model-1014',
+                'modelused':'modelB'
+            },
+            {
+                'weightspath': '/models/COVIDNet-CXR3-C',
+                'ckptname':'model-0',
+                'modelused':'modelC'
+            }
+        ]
+
+        for model in all_three_models:
+            # change the option to the new model name
+            options.weightspath = os.getcwd() + model['weightspath']
+            options.ckptname = model['ckptname']
+            options.modelused = model['modelused']
+            infer_obj = Inference(options)
+            infer_obj.infer()
 
     def show_man_page(self):
         """

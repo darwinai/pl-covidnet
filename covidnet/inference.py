@@ -56,11 +56,11 @@ class Inference():
             os.makedirs(self.args.outputdir)
         
         print("Creating prediction.json in {}...".format(self.args.outputdir))
-        with open('{}/prediction.json'.format(self.args.outputdir), 'w') as f:
+        with open('{}/prediction-{}.json'.format(self.args.outputdir, self.args.modelused), 'w') as f:
             json.dump(data, f, indent=4)
         
         print("Creating prediction.txt in {}...".format(self.args.outputdir))
-        with open('{}/prediction.txt'.format(self.args.outputdir), 'w') as f:
+        with open('{}/prediction-{}.txt'.format(self.args.outputdir, self.args.modelused), 'w') as f:
             f.write('Prediction: {}\n'.format(data['prediction']))
             f.write('Confidence\n')
             f.write('Normal: {}, Pneumonia: {}, COVID-19: {}\n'.format(data['Normal'], data['Pneumonia'], data['COVID-19']))
