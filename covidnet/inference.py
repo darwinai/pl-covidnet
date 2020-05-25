@@ -51,6 +51,9 @@ class Inference():
         
     
     def generate_output_files(self,data):
+        # remove this line to display model names mapped in dict
+        self.args.modelused = 'default'
+
         # creates the output directory if not exists
         if not os.path.exists(self.args.outputdir):
             os.makedirs(self.args.outputdir)

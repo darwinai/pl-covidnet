@@ -1,5 +1,0 @@
-Prediction: COVID-19
-Confidence
-Normal: 0.00080949446, Pneumonia: 0.0038597411, COVID-19: 0.99533075
-**DISCLAIMER**
-Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.

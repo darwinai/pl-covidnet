@@ -175,21 +175,21 @@ class Covidnet(ChrisApp):
         print(Gstr_title)
         print('Version: %s' % self.get_version())
         all_three_models = [
-            {
-                'weightspath':'/models/COVIDNet-CXR3-A',
-                'ckptname':'model-2856',
-                'modelused':'modelA'
-            }, 
+            # {
+            #     'weightspath':'/models/COVIDNet-CXR3-A',
+            #     'ckptname':'model-2856',
+            #     'modelused':'modelA'
+            # }, 
             {
                 'weightspath':'/models/COVIDNet-CXR3-B',
                 'ckptname':'model-1014',
                 'modelused':'modelB'
             },
-            {
-                'weightspath': '/models/COVIDNet-CXR3-C',
-                'ckptname':'model-0',
-                'modelused':'modelC'
-            }
+            # {
+            #     'weightspath': '/models/COVIDNet-CXR3-C',
+            #     'ckptname':'model-0',
+            #     'modelused':'modelC'
+            # }
         ]
 
         for model in all_three_models:
