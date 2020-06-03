@@ -68,7 +68,7 @@ Run
 Download Machine learning model from: 
 https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
 
-Make sure to download all three models
+Make sure to download: COVIDNet-CXR3-B, COVIDNet-SEV-GEO, COVIDNet-SEV-OPC
 
 Then put the downloaded folders in covidnet/models
 
