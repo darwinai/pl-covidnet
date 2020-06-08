@@ -3,3 +3,4 @@ pudb
 numpy==1.18.4
 opencv-python
 tensorflow==1.13.2
+pdfkit

@@ -32,7 +32,7 @@ COPY ["requirements.txt", "${APPROOT}"]
 
 WORKDIR $APPROOT
 
-RUN ["apt-get", "install", "-y", "libsm6", "libxext6", "libxrender-dev"]
+RUN ["apt-get", "install", "-y", "libsm6", "libxext6", "libxrender-dev", "wkhtmltopdf"]
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 

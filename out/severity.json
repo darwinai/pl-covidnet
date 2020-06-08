@@ -1,8 +1,8 @@
 {
-    "Geographic severity": 0.604,
-    "Geographic extent score": 4.835,
+    "Geographic severity": "0.519",
+    "Geographic extent score": "4.155",
     "GeoInfo": "For each lung: 0 = no involvement; 1 = <25%; 2 = 25-50%; 3 = 50-75%; 4 = >75% involvement.",
-    "Opacity severity": 0.604,
-    "Opacity extent score": 3.626,
+    "Opacity severity": "0.519",
+    "Opacity extent score": "3.116",
     "OpcInfo": "For each lung: 0 = no opacity; 1 = ground glass opacity; 2 =consolidation; 3 = white-out."
 }
