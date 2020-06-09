@@ -24,16 +24,18 @@
 
 
 
-FROM fnndsc/ubuntu-python3:latest
+FROM fnndsc/ubuntu-python3:18.04
 MAINTAINER fnndsc "dev@babymri.org"
 
 ENV APPROOT="/usr/src/covidnet"
+ENV DEBIAN_FRONTEND=noninteractive
 COPY ["covidnet", "${APPROOT}"]
 COPY ["requirements.txt", "${APPROOT}"]
 
 WORKDIR $APPROOT
 
-RUN ["apt-get", "install", "-y", "libsm6", "libxext6", "libxrender-dev","wkhtmltopdf"]
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "-y", "libsm6", "libxext6", "libxrender-dev", "wkhtmltopdf", "xvfb"]
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 

@@ -5,6 +5,7 @@ import cv2
 import json
 import shutil
 import pdfkit
+from pyvirtualdisplay import Display
 from data import process_image_file
 
 from collections import defaultdict
@@ -188,11 +189,15 @@ class Inference():
               txt = txt.replace("${OPC_EXTENT_SCORE}", severityScores['Opacity extent score'])
             with open("pdftemplate/specificPatient.html", 'w') as writeF:
               writeF.write(txt)
-
-        pdfkit.from_file(['pdftemplate/specificPatient.html'], '{}/patient_analysis.pdf'.format(self.args.outputdir))
+              
+        try:
+          disp = Display().start()
+          pdfkit.from_file(['pdftemplate/specificPatient.html'], '{}/patient_analysis.pdf'.format(self.args.outputdir))
+        finally:
+          disp.stop()
 
         # cleanup
-        os.remove("pdftemplate/specific.html")
+        os.remove("pdftemplate/specificPatient.html")
         os.remove("pdftemplate/{}".format(self.args.imagefile))
     
 
