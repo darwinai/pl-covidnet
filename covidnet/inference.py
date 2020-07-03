@@ -4,8 +4,6 @@ import os, argparse
 import cv2
 import json
 import shutil
-import pdfkit
-from pyvirtualdisplay import Display
 from data import process_image_file
 
 from collections import defaultdict
@@ -121,14 +119,13 @@ class Inference():
             output = model.infer(x)
 
             if modelName == 'models/COVIDNet-SEV-GEO':
-                res["Geographic severity"] = str(round(output[0], 3))
-                res['Geographic extent score'] = str(round(output[0] * 8, 3))
+                res["Geographic severity"] = str(int(round(output[0]*100)))
+                res['Geographic extent score'] = str(round(output[0] * 8, 1))
                 res['GeoInfo'] = "For each lung: 0 = no involvement; 1 = <25%; 2 = 25-50%; 3 = 50-75%; 4 = >75% involvement."
             elif modelName == 'models/COVIDNet-SEV-OPC':
-                res["Opacity severity"] = str(round(output[0], 3))
-                res['Opacity extent score'] = str(round(output[0] * 6, 3))
+                res["Opacity severity"] = str(int(round(output[0]*100)))
+                res['Opacity extent score'] = str(round(output[0] * 6, 1))
                 res['OpcInfo'] = 'For each lung: 0 = no opacity; 1 = ground glass opacity; 2 =consolidation; 3 = white-out.'
-
         return res
 
     def generate_output_files(self, classification_data, severityScores):
@@ -142,19 +139,6 @@ class Inference():
         print("Creating prediction.json in {}...".format(self.args.outputdir))
         with open('{}/prediction-{}.json'.format(self.args.outputdir, self.args.modelused), 'w') as f:
             json.dump(classification_data, f, indent=4)
-
-        # print("Creating prediction.txt in {}...".format(self.args.outputdir))
-        # with open(
-        #         '{}/prediction-{}.txt'.format(self.args.outputdir,
-        #                                       self.args.modelused), 'w') as f:
-        #     f.write('Prediction: {}\n'.format(classification_data['prediction']))
-        #     f.write('Confidence\n')
-        #     f.write('Normal: {}, Pneumonia: {}, COVID-19: {}\n'.format(
-        #         classification_data['Normal'], classification_data['Pneumonia'], classification_data['COVID-19']))
-        #     f.write('**DISCLAIMER**\n')
-        #     f.write(
-        #         'Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.'
-        #     )
         
         print("Copying over the input image to: {}...".format(self.args.outputdir))
         shutil.copy(self.args.inputdir + '/' + self.args.imagefile,self.args.outputdir)
@@ -166,39 +150,6 @@ class Inference():
         print("Creating severity.json in {}...".format(self.args.outputdir))
         with open('{}/severity.json'.format(self.args.outputdir), 'w') as f:
             json.dump(severityScores, f, indent=4)
-        
-        print("Creating pdf file in {}...".format(self.args.outputdir))
-        template_file = "pdf-covid-positive-template.html" 
-        if classification_data['prediction'] != "COVID-19":
-          template_file = "pdf-covid-negative-template.html"
-        # put image file in pdftemple folder to use it in pdf
-        shutil.copy(self.args.inputdir + '/' + self.args.imagefile, "pdftemplate/")
-        with open("pdftemplate/{}".format(template_file)) as f:
-            txt = f.read()
-            # replace the values
-            txt = txt.replace("${PREDICTION_CLASSIFICATION}", classification_data['prediction'])
-            txt = txt.replace("${COVID-19}", classification_data['COVID-19'])
-            txt = txt.replace("${NORMAL}", classification_data['Normal'])
-            txt = txt.replace("${PNEUMONIA}", classification_data['Pneumonia'])
-            txt = txt.replace("${X-RAY-IMAGE}", self.args.imagefile)
-            # add the severity value if prediction is covid
-            if template_file == "pdf-covid-positive-template.html":
-              txt = txt.replace("${GEO_SEVERITY}", severityScores["Geographic severity"])
-              txt = txt.replace("${GEO_EXTENT_SCORE}", severityScores["Geographic extent score"])
-              txt = txt.replace("${OPC_SEVERITY}", severityScores["Opacity severity"])
-              txt = txt.replace("${OPC_EXTENT_SCORE}", severityScores['Opacity extent score'])
-            with open("pdftemplate/specificPatient.html", 'w') as writeF:
-              writeF.write(txt)
-              
-        try:
-          disp = Display().start()
-          pdfkit.from_file(['pdftemplate/specificPatient.html'], '{}/patient_analysis.pdf'.format(self.args.outputdir))
-        finally:
-          disp.stop()
-
-        # cleanup
-        os.remove("pdftemplate/specificPatient.html")
-        os.remove("pdftemplate/{}".format(self.args.imagefile))
     
 
 

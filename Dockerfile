@@ -34,10 +34,15 @@ COPY ["requirements.txt", "${APPROOT}"]
 
 WORKDIR $APPROOT
 
-RUN ["apt-get", "update"]
-RUN ["apt-get", "install", "-y", "libsm6", "libxext6", "libxrender-dev", "wkhtmltopdf", "xvfb"]
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# RUN ["apt-get", "update"]
+# RUN ["apt-get", "install", "-y", "libsm6", "libxext6", "libxrender-dev", "wkhtmltopdf", "xvfb"]
+# RUN pip install --upgrade pip
+# RUN pip install -r requirements.txt
+
+RUN apt-get update \
+  && apt-get install -y libsm6 libxext6 libxrender-dev \
+  && pip install --upgrade pip \
+  && pip install -r requirements.txt
 
 CMD ["covidnet.py", "--help"]
 
