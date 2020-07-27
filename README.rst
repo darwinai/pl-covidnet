@@ -68,13 +68,13 @@ Run
 Download Machine learning model from: 
 https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
 
-Make sure to download: COVIDNet-CXR3-B, COVIDNet-SEV-GEO, COVIDNet-SEV-OPC
+Make sure to download: COVIDNet-CXR4-B, COVIDNet-SEV-GEO, COVIDNet-SEV-OPC
 
 Then put the downloaded folders in covidnet/models
 
 The folder structure should be:
 
-pl-covidnet/covidnet/models/COVIDNet-CXR3-A, pl-covidnet/covidnet/models/COVIDNet-CXR3-B, pl-covidnet/covidnet/models/COVIDNet-CXR3-C
+pl-covidnet/covidnet/models/COVIDNet-CXR4-B
 
 .. code:: bash
 
@@ -130,8 +130,4 @@ Examples
 
 docker build -t local/pl-covidnet .
 
-docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing local/pl-covidnet covidnet.py --imagefile ex-covid.jpeg /incoming /outgoing
-
-
-
-
+docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing local/pl-covidnet covidnet.py --imagefile ex-covid.jpg /incoming /outgoing

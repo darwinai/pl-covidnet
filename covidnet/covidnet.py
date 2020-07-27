@@ -181,8 +181,8 @@ class Covidnet(ChrisApp):
             #     'modelused':'modelA'
             # }, 
             {
-                'weightspath':'/models/COVIDNet-CXR3-B',
-                'ckptname':'model-1014',
+                'weightspath':'/models/COVIDNet-CXR4-B',
+                'ckptname':'model-1545',
                 'modelused':'modelB'
             },
             # {
