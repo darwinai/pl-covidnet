@@ -103,7 +103,7 @@ class Covidnet(ChrisApp):
     DOCUMENTATION           = 'http://wiki'
     VERSION                 = '0.1'
     ICON                    = '' # url of an icon image
-    LICENSE                 = 'Opensource (MIT)'
+    LICENSE                 = 'AGPL 3.0'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
     MIN_NUMBER_OF_WORKERS   = 1  # Override with integer value
     MAX_CPU_LIMIT           = '' # Override with millicore value as string, e.g. '2000m'
