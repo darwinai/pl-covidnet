@@ -2,5 +2,5 @@ chrisapp
 pudb
 numpy==1.18.4
 opencv-python==4.2.0.32
-tensorflow==1.13.2
+tensorflow==1.15.2
 tk==0.1.0
