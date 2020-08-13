@@ -192,7 +192,6 @@ class Covidnet(ChrisApp):
             # }
         ]
         for model in all_three_models:
-            # change the option to the new model name
             options.weightspath = os.getcwd() + model['weightspath']
             options.ckptname = model['ckptname']
             options.modelused = model['modelused']
