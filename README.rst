@@ -62,7 +62,7 @@ Agruments
     The name of the input image in the input directory, this is required
 
 
-Run
+Setup
 ----
 
 Download Machine learning model from: 
@@ -75,6 +75,10 @@ Then put the downloaded folders in covidnet/models
 The folder structure should be:
 
 pl-covidnet/covidnet/models/COVIDNet-CXR4-B
+
+
+Run
+----
 
 .. code:: bash
 
