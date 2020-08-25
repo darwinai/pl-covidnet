@@ -102,7 +102,7 @@ build the container using
 
 .. code:: bash
 
-    docker build -t pl-covidnet .
+    docker build -t local/pl-covidnet .
     
 
 Now, run the container:
