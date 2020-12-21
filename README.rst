@@ -25,13 +25,13 @@ Synopsis
 .. code::
 
     python covidnet.py                                              \
+        [--imagefile <imagefile>]                                   \
         [-v <level>] [--verbosity <level>]                          \
         [--version]                                                 \
         [--man]                                                     \
         [--meta]                                                    \
         <inputDir>                                                  \
-        <outputDir>                                                 \
-        --imagefile <imagefile>
+        <outputDir>                                                 
 
 Description
 -----------
@@ -42,6 +42,12 @@ Agruments
 ---------
 
 .. code::
+
+    [--imagefile <imageFile>]
+    The name of the input image in the input directory. 
+    If not specified, the first ``png`` image file will be analyzed.
+    If no ``png`` images are found, the first ``jpg/jpeg`` image will
+    be analyzed. 
 
     [-v <level>] [--verbosity <level>]
     Verbosity level for app. Not used currently.
@@ -58,8 +64,6 @@ Agruments
     [--meta]
     If specified, print plugin meta data.
 
-    [--imagefile <imageFile>]
-    The name of the input image in the input directory. If not specified, the first image file will be analyzed.
 
 Setup
 ----
