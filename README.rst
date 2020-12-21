@@ -58,9 +58,8 @@ Agruments
     [--meta]
     If specified, print plugin meta data.
 
-    --imagefile <imageFile>
-    The name of the input image in the input directory, this is required.
-
+    [--imagefile <imageFile>]
+    The name of the input image in the input directory. If not specified, the first image file will be analyzed.
 
 Setup
 ----
@@ -135,8 +134,12 @@ You can create different directories using the following command. The ``chmod 77
 Examples
 --------
 
-docker build -t local/pl-covidnet .
+.. code:: bash
 
-docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing   \
-           local/pl-covidnet covidnet.py                         \
-           --imagefile ex-covid.jpg /incoming /outgoing
+    docker build -t local/pl-covidnet .
+
+.. code:: bash
+
+    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing   \
+               local/pl-covidnet covidnet.py                         \
+               --imagefile ex-covid.jpg /incoming /outgoing
