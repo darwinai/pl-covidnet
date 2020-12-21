@@ -24,19 +24,19 @@ Synopsis
 
 .. code::
 
-    python covidnet.py                                           \
+    python covidnet.py                                              \
         [-v <level>] [--verbosity <level>]                          \
         [--version]                                                 \
         [--man]                                                     \
         [--meta]                                                    \
-        <inputDir>
-        <outputDir>
-        [--imagefile] <imagefile>
+        <inputDir>                                                  \
+        <outputDir>                                                 \
+        --imagefile <imagefile>
 
 Description
 -----------
 
-``covidnet.py`` is a ChRIS-based application that integrates COVID-Net to ChRIS
+``covidnet.py`` is a ChRIS-based application that integrates the COVID-Net inference engine in a ChRIS plugin.
 
 Agruments
 ---------
@@ -58,8 +58,8 @@ Agruments
     [--meta]
     If specified, print plugin meta data.
 
-    [--imagefile]
-    The name of the input image in the input directory, this is required
+    --imagefile <imageFile>
+    The name of the input image in the input directory, this is required.
 
 
 Setup
@@ -68,11 +68,13 @@ Setup
 Download Machine learning model from: 
 https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
 
-Make sure to download: COVIDNet-CXR4-B, COVIDNet-SEV-GEO, COVIDNet-SEV-OPC
+Make sure to download: 
 
-Then put the downloaded folders in covidnet/models
+.. code:: bash
 
-The folder structure should be:
+    COVIDNet-CXR4-B, COVIDNet-SEV-GEO, COVIDNet-SEV-OPC
+
+Then put the downloaded folders in ``covidnet/models``. The folder structure should be:
 
 .. code:: bash
 
@@ -87,13 +89,13 @@ Run
 .. code:: bash
 
     cd covidnet
-    python covidnet.py inputimage output --imagefile ex-covid.jpeg
+    python covidnet.py inputdir outputdir --imagefile ex-covid.jpeg
 
-``inputimage`` is the input directory
+- ``inputdir`` is the input directory containing an image to analyze (``ex-covid.jpeg``) in this example;
 
-``output`` is the directory you wish the output files to be in
+- ``outputdir`` is the directory that will contain output files;
 
-``--imagefile ex-covid.jpeg`` the name of the input image in the input directory
+- ``--imagefile ex-covid.jpeg`` the actual image to analyze relative to the ``inputdir``;
 
 
 Using ``docker run``
@@ -121,11 +123,10 @@ Now, run the container:
 
 This is volume mapping the in and out directory under pl-covidnet. Feel free to create different directories. 
 
-Make sure the input directory contain an image that fits the --imagefile argument, and make sure the incoming and outgoing 
-directories used as input are the ones being volume mapped.
+Make sure the input directory contains an image that fits the ``--imagefile`` argument, and make sure the ``incoming`` and ``outgoing`` directories used as input are the ones being volume mapped.
 
 
-You can create different directories using the following command. chmod 777 out just makes out directory writable
+You can create different directories using the following command. The ``chmod 777 out`` just makes out directory world writable:
 
 .. code:: bash
     
