@@ -45,7 +45,9 @@ Agruments
 
     [--imagefile <imageFile>]
     The name of the input image in the input directory. 
+
     If not specified, the first ``png`` image file will be analyzed.
+    
     If no ``png`` images are found, the first ``jpg/jpeg`` image will
     be analyzed. 
 
