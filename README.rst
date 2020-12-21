@@ -74,7 +74,11 @@ Then put the downloaded folders in covidnet/models
 
 The folder structure should be:
 
-pl-covidnet/covidnet/models/COVIDNet-CXR4-B
+.. code::bash 
+
+    pl-covidnet/covidnet/models/COVIDNet-CXR4-B
+    pl-covidnet/covidnet/models/COVIDNet-SEV-GEO
+    pl-covidnet/covidnet/models/COVIDNet-SEV-OPC
 
 
 Run
