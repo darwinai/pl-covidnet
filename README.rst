@@ -74,7 +74,7 @@ Then put the downloaded folders in covidnet/models
 
 The folder structure should be:
 
-.. code::bash 
+.. code:: bash
 
     pl-covidnet/covidnet/models/COVIDNet-CXR4-B
     pl-covidnet/covidnet/models/COVIDNet-SEV-GEO
@@ -89,14 +89,11 @@ Run
     cd covidnet
     python covidnet.py inputimage output --imagefile ex-covid.jpeg
 
-inputimage is the input directory
+``inputimage`` is the input directory
 
-output is the directory you wish the output files to be in
+``output`` is the directory you wish the output files to be in
 
---imagefile ex-covid.jpeg the name of the input image in the input directory
-
-
-
+``--imagefile ex-covid.jpeg`` the name of the input image in the input directory
 
 
 Using ``docker run``
@@ -117,8 +114,9 @@ Now, run the container:
 
 .. code:: bash
 
-    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing                       \
-            pl-covidnet covidnet.py --imagefile ex-covid.jpeg /incoming /outgoing                       \
+    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing    \
+               pl-covidnet covidnet.py                                \
+               --imagefile ex-covid.jpeg /incoming /outgoing
 
 
 This is volume mapping the in and out directory under pl-covidnet. Feel free to create different directories. 
@@ -138,4 +136,6 @@ Examples
 
 docker build -t local/pl-covidnet .
 
-docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing local/pl-covidnet covidnet.py --imagefile ex-covid.jpg /incoming /outgoing
+docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing   \
+           local/pl-covidnet covidnet.py                         \
+           --imagefile ex-covid.jpg /incoming /outgoing
