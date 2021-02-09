@@ -1,1 +1,90 @@
-{"type": "ds", "parameters": [{"name": "metaname", "type": "str", "optional": true, "flag": "--metaname", "short_flag": "--metaname", "action": "store", "help": "Name of ckpt meta file", "default": "model.meta", "ui_exposed": true}, {"name": "imagefile", "type": "str", "optional": false, "flag": "--imagefile", "short_flag": "--imagefile", "action": "store", "help": "Name of image file to infer from", "default": null, "ui_exposed": true}, {"name": "in_tensorname", "type": "str", "optional": true, "flag": "--in_tensorname", "short_flag": "--in_tensorname", "action": "store", "help": "Name of input tensor to graph", "default": "input_1:0", "ui_exposed": true}, {"name": "out_tensorname", "type": "str", "optional": true, "flag": "--out_tensorname", "short_flag": "--out_tensorname", "action": "store", "help": "Name of output tensor from graph", "default": "norm_dense_1/Softmax:0", "ui_exposed": true}, {"name": "input_size", "type": "int", "optional": true, "flag": "--input_size", "short_flag": "--input_size", "action": "store", "help": "Size of input (ex: if 480x480, --input_size 480)", "default": 480, "ui_exposed": true}, {"name": "top_percent", "type": "float", "optional": true, "flag": "--top_percent", "short_flag": "--top_percent", "action": "store", "help": "Percent top crop from top of image", "default": 0.08, "ui_exposed": true}], "icon": "", "authors": "Jeffer Peng (jeffer.peng@darwinai.ca)", "title": "A ChRIS plugin app", "category": "", "description": "Plugin to ChRIS for covidnet functionalities", "documentation": "http://wiki", "license": "Opensource (MIT)", "version": "0.1", "selfpath": "/usr/src/covidnet", "selfexec": "covidnet.py", "execshell": "python3", "max_number_of_workers": 1, "min_number_of_workers": 1, "max_memory_limit": "", "min_memory_limit": "", "max_cpu_limit": "", "min_cpu_limit": "", "max_gpu_limit": 0, "min_gpu_limit": 0}
+{
+    "type": "ds",
+    "parameters": [
+        {
+            "name": "metaname",
+            "type": "str",
+            "optional": true,
+            "flag": "--metaname",
+            "short_flag": "--metaname",
+            "action": "store",
+            "help": "Name of ckpt meta file",
+            "default": "model.meta",
+            "ui_exposed": true
+        },
+        {
+            "name": "imagefile",
+            "type": "str",
+            "optional": false,
+            "flag": "--imagefile",
+            "short_flag": "--imagefile",
+            "action": "store",
+            "help": "Name of image file to infer from",
+            "default": null,
+            "ui_exposed": true
+        },
+        {
+            "name": "in_tensorname",
+            "type": "str",
+            "optional": true,
+            "flag": "--in_tensorname",
+            "short_flag": "--in_tensorname",
+            "action": "store",
+            "help": "Name of input tensor to graph",
+            "default": "input_1:0",
+            "ui_exposed": true
+        },
+        {
+            "name": "out_tensorname",
+            "type": "str",
+            "optional": true,
+            "flag": "--out_tensorname",
+            "short_flag": "--out_tensorname",
+            "action": "store",
+            "help": "Name of output tensor from graph",
+            "default": "norm_dense_1/Softmax:0",
+            "ui_exposed": true
+        },
+        {
+            "name": "input_size",
+            "type": "int",
+            "optional": true,
+            "flag": "--input_size",
+            "short_flag": "--input_size",
+            "action": "store",
+            "help": "Size of input (ex: if 480x480, --input_size 480)",
+            "default": 480,
+            "ui_exposed": true
+        },
+        {
+            "name": "top_percent",
+            "type": "float",
+            "optional": true,
+            "flag": "--top_percent",
+            "short_flag": "--top_percent",
+            "action": "store",
+            "help": "Percent top crop from top of image",
+            "default": 0.08,
+            "ui_exposed": true
+        }
+    ],
+    "icon": "",
+    "authors": "Jeffer Peng <jeffer.peng@darwinai.ca>",
+    "title": "COVID-Net inference for chest x-ray",
+    "category": "",
+    "description": "Plugin to ChRIS for covidnet functionalities",
+    "documentation": "https://github.com/FNNDSC/pl-covidnet#pl-covidnet",
+    "license": "AGPL",
+    "version": "0.2.0",
+    "selfpath": "/usr/local/bin",
+    "selfexec": "covidnet",
+    "execshell": "/usr/bin/python3",
+    "max_number_of_workers": 1,
+    "min_number_of_workers": 1,
+    "max_memory_limit": "",
+    "min_memory_limit": "",
+    "max_cpu_limit": "",
+    "min_cpu_limit": "",
+    "max_gpu_limit": 0,
+    "min_gpu_limit": 0
+}

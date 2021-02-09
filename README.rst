@@ -90,3 +90,7 @@ https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
 
 A custom UI was developed for a workflow which this plugin is a part of.
 https://github.com/FNNDSC/covidnet_ui
+
+
+.. image:: https://raw.githubusercontent.com/FNNDSC/cookiecutter-chrisapp/master/doc/assets/badge/light.png
+    :target: https://chrisstore.co/plugin/28
