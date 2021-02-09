@@ -2,7 +2,7 @@
 #
 # covidnet ds ChRIS plugin app
 #
-# (c) 2016-2019 Fetal-Neonatal Neuroimaging & Developmental Science Center
+# (c) 2019-2021 Fetal-Neonatal Neuroimaging & Developmental Science Center
 #                   Boston Children's Hospital
 #
 #              http://childrenshospital.org/FNNDSC/
@@ -12,98 +12,29 @@
 
 import os
 import sys
-sys.path.append(os.path.dirname(__file__))
-from inference import Inference
+from .inference import Inference
 
-# import the Chris app superclass
 from chrisapp.base import ChrisApp
 
 
 Gstr_title = """
-
-Generate a title from 
-http://patorjk.com/software/taag/#p=display&f=Doom&t=covidnet
-
-"""
-
-Gstr_synopsis = """
-
-(Edit this in-line help for app specifics. At a minimum, the 
-flags below are supported -- in the case of DS apps, both
-positional arguments <inputDir> and <outputDir>; for FS apps
-only <outputDir> -- and similarly for <in> <out> directories
-where necessary.)
-
-    NAME
-
-       covidnet.py 
-
-    SYNOPSIS
-
-        python covidnet.py                                         \\
-            [-h] [--help]                                               \\
-            [--json]                                                    \\
-            [--man]                                                     \\
-            [--meta]                                                    \\
-            [--savejson <DIR>]                                          \\
-            [-v <level>] [--verbosity <level>]                          \\
-            [--version]                                                 \\
-            <inputDir>                                                  \\
-            <outputDir> 
-
-    BRIEF EXAMPLE
-
-        * Bare bones execution
-
-            mkdir in out && chmod 777 out
-            python covidnet.py   \\
-                                in    out
-
-    DESCRIPTION
-
-        `covidnet.py` ...
-
-    ARGS
-
-        [-h] [--help]
-        If specified, show help message and exit.
-        
-        [--json]
-        If specified, show json representation of app and exit.
-        
-        [--man]
-        If specified, print (this) man page and exit.
-
-        [--meta]
-        If specified, print plugin meta data and exit.
-        
-        [--savejson <DIR>] 
-        If specified, save json representation file to DIR and exit. 
-        
-        [-v <level>] [--verbosity <level>]
-        Verbosity level for app. Not used currently.
-        
-        [--version]
-        If specified, print version number and exit. 
-
+ _____ _____  _   _ ___________        _   _      _   
+/  __ \  _  || | | |_   _|  _  \      | \ | |    | |  
+| /  \/ | | || | | | | | | | | |______|  \| | ___| |_ 
+| |   | | | || | | | | | | | | |______| . ` |/ _ \ __|
+| \__/\ \_/ /\ \_/ /_| |_| |/ /       | |\  |  __/ |_ 
+ \____/\___/  \___/ \___/|___/        \_| \_/\___|\__|
 """
 
 class Covidnet(ChrisApp):
     """
     Plugin to ChRIS for covidnet functionalities.
     """
-    AUTHORS                 = 'Jeffer Peng (jeffer.peng@darwinai.ca)'
-    SELFPATH                = os.path.dirname(os.path.abspath(__file__))
-    SELFEXEC                = os.path.basename(__file__)
-    EXECSHELL               = 'python3'
-    TITLE                   = 'A ChRIS plugin app'
+    PACKAGE                 = __package__
+    TITLE                   = 'COVID-Net inference for chest x-ray'
     CATEGORY                = ''
     TYPE                    = 'ds'
-    DESCRIPTION             = 'Plugin to ChRIS for covidnet functionalities'
-    DOCUMENTATION           = 'http://wiki'
-    VERSION                 = '0.1'
     ICON                    = '' # url of an icon image
-    LICENSE                 = 'AGPL 3.0'
     MAX_NUMBER_OF_WORKERS   = 1  # Override with integer value
     MIN_NUMBER_OF_WORKERS   = 1  # Override with integer value
     MAX_CPU_LIMIT           = '' # Override with millicore value as string, e.g. '2000m'
@@ -181,7 +112,7 @@ class Covidnet(ChrisApp):
             #     'modelused':'modelA'
             # }, 
             {
-                'weightspath':'/models/COVIDNet-CXR4-B',
+                'weightspath':'/usr/local/lib/covidnet/COVIDNet-CXR4-B',
                 'ckptname':'model-1545',
                 'modelused':'modelB'
             },
@@ -192,7 +123,7 @@ class Covidnet(ChrisApp):
             # }
         ]
         for model in all_three_models:
-            options.weightspath = os.getcwd() + model['weightspath']
+            options.weightspath = model['weightspath']
             options.ckptname = model['ckptname']
             options.modelused = model['modelused']
             infer_obj = Inference(options)
@@ -202,13 +133,7 @@ class Covidnet(ChrisApp):
         """
         Print the app's man page.
         """
-        print(Gstr_synopsis)
-
-
-# ENTRYPOINT
-if __name__ == "__main__":
-    chris_app = Covidnet()
-    chris_app.launch()
+        self.print_help()
 
 # chris app needs to write to files as outputs and taking inputs
 # output a dicom image then ChRIS user interface will be able to show it

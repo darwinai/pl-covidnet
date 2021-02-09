@@ -4,7 +4,7 @@ import os, argparse
 import cv2
 import json
 import shutil
-from data import process_image_file
+from .data import process_image_file
 
 from collections import defaultdict
 
@@ -100,11 +100,11 @@ class Inference():
         return output_dict
         
     def generate_severity_data(self, imagePath):
-        models = ['models/COVIDNet-SEV-GEO','models/COVIDNet-SEV-OPC']
+        models = ['/usr/local/lib/covidnet/COVIDNet-SEV-GEO','/usr/local/lib/covidnet/COVIDNet-SEV-OPC']
         res = {}
         for modelName in models:
             args = {
-              "weightspath":'models/COVIDNet-SEV-GEO',
+              "weightspath":'/usr/local/lib/covidnet/COVIDNet-SEV-GEO',
               "metaname":"model.meta",
               "ckptname":"model",
               "input_size":480,
@@ -118,11 +118,11 @@ class Inference():
                               os.path.join(args['weightspath'], args['ckptname']))
             output = model.infer(x)
 
-            if modelName == 'models/COVIDNet-SEV-GEO':
+            if modelName.endswith('COVIDNet-SEV-GEO'):
                 res["Geographic severity"] = str(int(round(output[0]*100)))
                 res['Geographic extent score'] = str(round(output[0] * 8, 1))
                 res['GeoInfo'] = "For each lung: 0 = no involvement; 1 = <25%; 2 = 25-50%; 3 = 50-75%; 4 = >75% involvement."
-            elif modelName == 'models/COVIDNet-SEV-OPC':
+            elif modelName.endswith('COVIDNet-SEV-OPC'):
                 res["Opacity severity"] = str(int(round(output[0]*100)))
                 res['Opacity extent score'] = str(round(output[0] * 6, 1))
                 res['OpcInfo'] = 'For each lung: 0 = no opacity; 1 = ground glass opacity; 2 =consolidation; 3 = white-out.'

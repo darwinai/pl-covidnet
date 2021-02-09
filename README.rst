@@ -1,14 +1,13 @@
 pl-covidnet
 ================================
 
-.. image:: https://badge.fury.io/py/covidnet.svg
-    :target: https://badge.fury.io/py/covidnet
+.. image:: https://img.shields.io/github/license/FNNDSC/pl-covidnet
+    :target: https://github.com/FNNDSC/pl-covidnet/blob/master/LICENSE
+    :alt: License AGPL-3.0
 
-.. image:: https://travis-ci.org/FNNDSC/covidnet.svg?branch=master
-    :target: https://travis-ci.org/FNNDSC/covidnet
+.. image:: https://img.shields.io/docker/v/fnndsc/pl-covidnet?sort=semver
+    :target: https://hub.docker.com/r/fnndsc/pl-covidnet
 
-.. image:: https://img.shields.io/badge/python-3.5%2B-blue.svg
-    :target: https://badge.fury.io/py/pl-covidnet
 
 .. contents:: Table of Contents
 
@@ -16,7 +15,7 @@ pl-covidnet
 Abstract
 --------
 
-Plugin to ChRIS for covidnet functionalities
+A ChRIS plugin to do predictive analysis on chest x-ray for COVID-19 diagnostics.
 
 
 Synopsis
@@ -32,6 +31,7 @@ Synopsis
         [--meta]                                                    \
         <inputDir>                                                  \
         <outputDir>                                                 
+
 
 Description
 -----------
@@ -63,89 +63,30 @@ Agruments
     [--meta]
     If specified, print plugin meta data.
 
-    [--meta]
-    If specified, print plugin meta data.
 
-
-Setup
-----
-
-Download Machine learning model from: 
-https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
-
-Make sure to download: 
+Local Build
+-----------
 
 .. code:: bash
 
-    COVIDNet-CXR4-B, COVIDNet-SEV-GEO, COVIDNet-SEV-OPC
-
-Then put the downloaded folders in ``covidnet/models``. The folder structure should be:
-
-.. code:: bash
-
-    pl-covidnet/covidnet/models/COVIDNet-CXR4-B
-    pl-covidnet/covidnet/models/COVIDNet-SEV-GEO
-    pl-covidnet/covidnet/models/COVIDNet-SEV-OPC
-
+    DOCKER_BUILDKIT=1 docker build -t local/pl-covidnet .
 
 Run
 ----
 
 .. code:: bash
 
-    cd covidnet
-    python covidnet.py inputdir outputdir --imagefile ex-covid.jpeg
-
-- ``inputdir`` is the input directory containing an image to analyze (``ex-covid.jpeg``) in this example;
-
-- ``outputdir`` is the directory that will contain output files;
-
-- ``--imagefile ex-covid.jpeg`` the actual image to analyze relative to the ``inputdir``;
-
-
-Using ``docker run``
-~~~~~~~~~~~~~~~~~~~~
-
-To run using ``docker``, be sure to assign an "in" directory to ``/incoming`` and an "out" directory to ``/outgoing``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
-
-Start from the pl-covidnet directory
-
-build the container using 
-
-.. code:: bash
-
-    docker build -t local/pl-covidnet .
-    
-
-Now, run the container:
-
-.. code:: bash
-
-    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing    \
-               pl-covidnet covidnet.py                                \
+    docker run --rm -v $PWD/in:/incoming -v $PWD/out:/outgoing    \
+        fnndsc/pl-covidnet:0.2.0 covidnet                         \
                --imagefile ex-covid.jpeg /incoming /outgoing
 
 
-This is volume mapping the in and out directory under pl-covidnet. Feel free to create different directories. 
+Links
+-----
 
-Make sure the input directory contains an image that fits the ``--imagefile`` argument, and make sure the ``incoming`` and ``outgoing`` directories used as input are the ones being volume mapped.
+Models are rehosted for the sake of convenience, opposed to using Google Drive
+as a CDN. They were originally sourced from
+https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
 
-
-You can create different directories using the following command. The ``chmod 777 out`` just makes out directory world writable:
-
-.. code:: bash
-    
-    mkdir in out && chmod 777 out
-
-Examples
---------
-
-.. code:: bash
-
-    docker build -t local/pl-covidnet .
-
-.. code:: bash
-
-    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing   \
-               local/pl-covidnet covidnet.py                         \
-               --imagefile ex-covid.jpg /incoming /outgoing
+A custom UI was developed for a workflow which this plugin is a part of.
+https://github.com/FNNDSC/covidnet_ui
