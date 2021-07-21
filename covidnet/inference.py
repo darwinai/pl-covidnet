@@ -152,10 +152,11 @@ class Inference():
                                                self.args.modelused), 'w') as f:
             json.dump(classification_data, f, indent=4)
 
-        print(f"Creating raw-prediction-matrix.npy in {self.args.outputdir}")
-        np.save(
-            f"{self.args.outputdir}/raw-prediction-matrix-{self.args.modelused}.npy",
-            raw_classification_data)
+        print(f"Creating raw-prediction-matrix.json in {self.args.outputdir}")
+        with open(
+                f"{self.args.outputdir}/raw-prediction-matrix-{self.args.modelused}.json",
+                'w') as f:
+            json.dump(raw_classification_data.tolist(), f, indent=4)
 
         print("Copying over the input image to: {}...".format(
             self.args.outputdir))
