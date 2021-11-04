@@ -78,7 +78,6 @@ class Inference():
             saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
 
             graph = tf.get_default_graph()
-
             image_tensor = graph.get_tensor_by_name(args.in_tensorname)
             pred_tensor = graph.get_tensor_by_name(args.out_tensorname)
 
@@ -103,7 +102,7 @@ class Inference():
         if output_dict["prediction"] == 'COVID-19':
             severityScores = self.generate_severity_data(args.imagepath)
 
-        self.generate_output_files(output_dict, severityScores)
+        self.generate_output_files(output_dict, pred, severityScores)
 
         return output_dict
 
@@ -138,7 +137,8 @@ class Inference():
                 res['OpcInfo'] = 'For each lung: 0 = no opacity; 1 = ground glass opacity; 2 =consolidation; 3 = white-out.'
         return res
 
-    def generate_output_files(self, classification_data, severityScores):
+    def generate_output_files(self, classification_data,
+                              raw_classification_data, severityScores):
         # remove this line to display model names mapped in dict
         self.args.modelused = 'default'
 
@@ -151,6 +151,12 @@ class Inference():
                 '{}/prediction-{}.json'.format(self.args.outputdir,
                                                self.args.modelused), 'w') as f:
             json.dump(classification_data, f, indent=4)
+
+        print(f"Creating raw-prediction-matrix.json in {self.args.outputdir}")
+        with open(
+                f"{self.args.outputdir}/raw-prediction-matrix-{self.args.modelused}.json",
+                'w') as f:
+            json.dump(raw_classification_data.tolist(), f, indent=4)
 
         print("Copying over the input image to: {}...".format(
             self.args.outputdir))
