@@ -1,5 +1,5 @@
 pl-covidnet
-================================
+===========
 
 .. image:: https://badge.fury.io/py/covidnet.svg
     :target: https://badge.fury.io/py/covidnet
@@ -24,11 +24,11 @@ Synopsis
 
 .. code::
 
-    python covidnet.py                                           \
-        [-v <level>] [--verbosity <level>]                          \
-        [--version]                                                 \
-        [--man]                                                     \
-        [--meta]                                                    \
+    python covidnet.py
+        [-v <level>] [--verbosity <level>]
+        [--version]
+        [--man]
+        [--meta]
         <inputDir>
         <outputDir>
         [--imagefile] <imagefile>
@@ -62,76 +62,26 @@ Agruments
     The name of the input image in the input directory, this is required
 
 
-Setup
-----
+Models
+------
 
-Download Machine learning model from: 
+The COVIDNet-CXR4-B, COVIDNet-SEV-GEO, and COVIDNet-SEV-OPC models are downloaded from
 https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
 
-Make sure to download: COVIDNet-CXR4-B, COVIDNet-SEV-GEO, COVIDNet-SEV-OPC
 
-Then put the downloaded folders in covidnet/models
 
-The folder structure should be:
+Local Build
+-----------
 
-pl-covidnet/covidnet/models/COVIDNet-CXR4-B
+.. code:: bash
 
+    DOCKER_BUILDKIT=1 docker build -t local/pl-covidnet .
 
 Run
 ----
 
 .. code:: bash
 
-    cd covidnet
-    python covidnet.py inputimage output --imagefile ex-covid.jpeg
-
-inputimage is the input directory
-
-output is the directory you wish the output files to be in
-
---imagefile ex-covid.jpeg the name of the input image in the input directory
-
-
-
-
-
-Using ``docker run``
-~~~~~~~~~~~~~~~~~~~~
-
-To run using ``docker``, be sure to assign an "in" directory to ``/incoming`` and an "out" directory to ``/outgoing``. *Make sure that the* ``$(pwd)/out`` *directory is world writable!*
-
-Start from the pl-covidnet directory
-
-build the container using 
-
-.. code:: bash
-
-    docker build -t local/pl-covidnet .
-    
-
-Now, run the container:
-
-.. code:: bash
-
-    docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing                       \
-            pl-covidnet covidnet.py --imagefile ex-covid.jpeg /incoming /outgoing                       \
-
-
-This is volume mapping the in and out directory under pl-covidnet. Feel free to create different directories. 
-
-Make sure the input directory contain an image that fits the --imagefile argument, and make sure the incoming and outgoing 
-directories used as input are the ones being volume mapped.
-
-
-You can create different directories using the following command. chmod 777 out just makes out directory writable
-
-.. code:: bash
-    
-    mkdir in out && chmod 777 out
-
-Examples
---------
-
-docker build -t local/pl-covidnet .
-
-docker run --rm -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing local/pl-covidnet covidnet.py --imagefile ex-covid.jpg /incoming /outgoing
+    docker run --rm -v $PWD/in:/incoming -v $PWD/out:/outgoing    \
+        darwinai/covidnet-pl covidnet                             \
+                --imagefile ex-covid.jpeg /incoming /outgoing
