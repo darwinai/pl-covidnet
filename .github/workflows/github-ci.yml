@@ -43,7 +43,7 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: darwinai/covidnet-pl:${{ github.event.release.tag_name || env.RELEASE_TAG }}, darwinai/covidnet-pl:latest
+          tags: darwinai/pl-covidnet:${{ github.event.release.tag_name || env.RELEASE_TAG }}, darwinai/pl-covidnet:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
